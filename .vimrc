@@ -5,6 +5,11 @@ filetype off
 if $TERM_PROGRAM =~ "iTerm"
     let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
     let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+else
+    let &t_ti.="\e[1 q"
+    let &t_SI.="\e[5 q"
+    let &t_EI.="\e[1 q"
+    let &t_te.="\e[0 q"
 endif
 
 syntax on
@@ -25,6 +30,7 @@ set smarttab
 set hlsearch
 set listchars=nbsp:¬,eol:¶,tab:>-,extends:»,precedes:«,trail:•
 set backspace=indent,eol,start
+
 
 " Better command-line completion
 " set wildmode=longest,list,full
@@ -47,8 +53,14 @@ filetype plugin indent on
 colorscheme molokai
 
 if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
     let g:ackprg = 'ag'
+endif
+
+if executable('rg')
+    set grepprg=rg\ --color=never
+    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+elseif executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 else
     " Ignore .gitignore files
@@ -57,3 +69,7 @@ endif
 
 let g:ctrlp_max_files=0
 let g:ctrlp_max_depth=50
+
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = 'npm'
+let g:syntastic_javascript_eslint_exe = 'npm run lint --'
