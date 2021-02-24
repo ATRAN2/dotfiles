@@ -1,3 +1,5 @@
+
+
 set nocompatible
 set t_Co=256
 filetype off
@@ -28,7 +30,7 @@ set tabstop=4
 set shiftwidth=4
 set smarttab
 set hlsearch
-set listchars=nbsp:Â¬,eol:Â¶,tab:>-,extends:Â»,precedes:Â«,trail:â€¢
+set listchars=nbsp:¬,eol:¶,tab:>-,extends:»,precedes:«,trail:•
 set backspace=indent,eol,start
 
 
@@ -36,6 +38,7 @@ set backspace=indent,eol,start
 " set wildmode=longest,list,full
 set wildmenu
 
+set rtp+=~/.fzf
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()"
 
@@ -51,10 +54,6 @@ call vundle#end()
 filetype plugin indent on
 
 colorscheme molokai
-
-if executable('ag')
-    let g:ackprg = 'ag'
-endif
 
 nnoremap <silent> <C-p> :FZF<CR>
 let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
