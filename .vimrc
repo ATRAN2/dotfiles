@@ -28,7 +28,7 @@ set tabstop=4
 set shiftwidth=4
 set smarttab
 set hlsearch
-set listchars=nbsp:¬,eol:¶,tab:>-,extends:»,precedes:«,trail:•
+set listchars=nbsp:Â¬,eol:Â¶,tab:>-,extends:Â»,precedes:Â«,trail:â€¢
 set backspace=indent,eol,start
 
 
@@ -40,12 +40,12 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()"
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'kien/ctrlp.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tomasr/molokai'
-Plugin 'mileszs/ack.vim'
 
 call vundle#end()
 filetype plugin indent on
@@ -56,19 +56,8 @@ if executable('ag')
     let g:ackprg = 'ag'
 endif
 
-if executable('rg')
-    set grepprg=rg\ --color=never
-    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-elseif executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-else
-    " Ignore .gitignore files
-    let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-endif
-
-let g:ctrlp_max_files=0
-let g:ctrlp_max_depth=50
+nnoremap <silent> <C-p> :FZF<CR>
+let $FZF_DEFAULT_COMMAND = 'fd --type f --hidden --follow --exclude .git'
 
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exec = 'npm'
